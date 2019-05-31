@@ -85,7 +85,6 @@
     <allow-navigation href="http://192.168.1.5:8100" />
     <allow-navigation href="http://192.168.1.2:8100" />
     <plugin name="cordova-plugin-device" spec="^1.1.7" />
-    <plugin name="cordova-plugin-firebase" spec="^1.0.5" />
     <plugin name="cordova-plugin-googleplus" spec="^5.3.0">
         <variable name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.170354734277-rdgghkmfo948204kctr1dv41p59r98vu" />
     </plugin>

@@ -3,7 +3,6 @@ import { NavController, Platform, Events, LoadingController } from 'ionic-angula
 import { App, Nav } from 'ionic-angular';
 import { HomePage } from '../../pages/home/home';
 import { Network } from '@ionic-native/network';
-import { Firebase } from '@ionic-native/firebase';
 import { GooglePlus } from '@ionic-native/google-plus';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser';
 
@@ -53,7 +52,6 @@ export class LoginPage {
     private appBrowser: InAppBrowser,
     public events: Events,
     private tokenService: TokenService,
-    private firebase: Firebase,
     private googlePlus: GooglePlus,
     private loadingCtrl: LoadingController
   ) { }
@@ -84,6 +82,7 @@ export class LoginPage {
             localStorage.setItem("id_token", data.id_token);
             this.authService.getProfileGoogle(data.access_token)
             .subscribe(user => {
+              
               let scope = {
                 NOMBRES: user.given_name,
                 APELLIDOS: user.family_name,
@@ -118,8 +117,11 @@ export class LoginPage {
       browserRef.on("loadstart").subscribe((event) => {
         if ((event.url).indexOf("http://localhost/callback") === 0) {
           closeSuccess = true;
+          
           browserRef.close();
           let responseParameters = ((event.url).split("?")[1]).split("&");
+          console.log(responseParameters);
+          
           if (responseParameters[0].indexOf('xyz') != -1) {
             resolve({ detail: event.url.substring(event.url.lastIndexOf("code=") + 5, event.url.length), state: 'OK' });
           } else if (responseParameters[0].substring(6, responseParameters[0].length) == 'access_denied') {
