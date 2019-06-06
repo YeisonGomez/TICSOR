@@ -18,12 +18,11 @@
                 <br>
                 <ion-slides pager class="slider">
                     <ion-slide class="slider-page" *ngFor="let i = index; let image of questions[questionIndex].images">
-                        <img *ngIf="image.indexOf('mp4') == -1" src="{{image}}" alt="">
-                        <video *ngIf="image.indexOf('mp4') != -1" id="video-{{i}}" width="100%">
-              <source src="{{image}}" type="video/mp4">
-              Your browser does not support the video tag.
-            </video>
-                        <ion-icon *ngIf="image.indexOf('mp4') != -1" name="{{reproduce}}" (click)="reproduceVideo(i)"></ion-icon>
+                        <img *ngIf="image.type == 'image'" src="{{image.source}}" alt="">
+                        
+
+                        <iframe *ngIf="image.type == 'video'" id="video-{{i}}" style="width: 100%;height: 100%" width="100" height="100" 
+                        [src]=image.source></iframe>
                     </ion-slide>
                 </ion-slides>
                 <div class="test-lifes">
@@ -37,7 +36,7 @@
         <div class="test-question" padding *ngIf="questions[questionIndex].respuesta[0].imagen == 0">
             <ion-list>
                 <ion-item *ngFor="let item of questions[questionIndex].respuesta">
-                    <ion-label (click)="questions[questionIndex].select = item.id">{{item.contenido}}</ion-label>
+                    <ion-label (click)="questions[questionIndex].select = item.id">{{item.contenido.source}}</ion-label>
                     <ion-checkbox (click)="questions[questionIndex].select = item.id" color="dark" checked="{{questions[questionIndex].select == item.id}}"></ion-checkbox>
                 </ion-item>
             </ion-list>
@@ -45,7 +44,11 @@
         <div class="test-question grid-imgs" padding *ngIf="questions[questionIndex].respuesta[0].imagen > 0">
             <div class="answer" *ngFor="let item of questions[questionIndex].respuesta" (click)="questions[questionIndex].select = item.id" [ngClass]="{'selected': questions[questionIndex].select == item.id}">
                 <!--selected en answer-->
-                <img src="{{item.contenido}}" alt="">
+                <img *ngIf="item.contenido.type == 'image'" src="{{item.contenido.source}}" alt="">
+
+                <iframe *ngIf="item.contenido.type == 'video'" id="video-{{i}}" style="width: 100%;height: 100%" width="100" height="100" 
+                [src]=item.contenido.source></iframe>
+
             </div>
         </div>
         <div>

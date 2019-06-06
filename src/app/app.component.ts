@@ -4,13 +4,10 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
-import { NewsPage } from '../pages/news/news';
 import { LoginPage } from '../pages/login/login';
 import { LessonsPage } from '../pages/lessons/lessons';
-import { TopicPage } from '../pages/topic/topic';
-import { CoursePage } from '../pages/course/course';
 import { PracticePage } from '../pages/practice/practice';
-import { TestPage } from '../pages/test/test';
+import { TeleologicalPage } from '../pages/teleological/teleological';
 import { AboutusPage } from '../pages/aboutus/aboutus';
 import { QrPage } from '../pages/qr/qr';
 
@@ -53,7 +50,8 @@ export class TICSOR {
       { title: 'Inicio', component: HomePage, icon: 'home' },
       { title: 'Temario', component: LessonsPage, icon: 'book' },
       { title: 'Práctica', component: PracticePage, icon: 'school' },
-      { title: 'Nosotros', component: AboutusPage, icon: 'contact' }
+      { title: 'Nosotros', component: AboutusPage, icon: 'contact' },
+      { title: 'Temario Teleológico', component: TeleologicalPage, icon: 'book' }
     ];
   }
   createCode(){

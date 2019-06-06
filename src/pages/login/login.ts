@@ -120,7 +120,6 @@ export class LoginPage {
           
           browserRef.close();
           let responseParameters = ((event.url).split("?")[1]).split("&");
-          console.log(responseParameters);
           
           if (responseParameters[0].indexOf('xyz') != -1) {
             resolve({ detail: event.url.substring(event.url.lastIndexOf("code=") + 5, event.url.length), state: 'OK' });

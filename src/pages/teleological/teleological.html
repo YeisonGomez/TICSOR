@@ -1,0 +1,30 @@
+<ion-header>
+    <ion-navbar color="primary">
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>TicSor</ion-title>
+        <ion-buttons end>
+            <button style="font-size: 1.8rem;" ion-button color="light" (click)="presentActionSheet()">
+                <ion-icon name="more"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content padding style="background: #E5E5E5;">
+    <div class="lesson-card play " *ngIf="defaultMultimedia">
+        <div class="lesson-card-img" >
+            <iframe 
+                [src]=defaultMultimedia frameborder="0" allow="accelerometer;encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
+    <section class="grid-lessons" style="display: flex">
+        <div class="lesson-card" *ngFor="let temary of temary" style="margin: 2px 4px!important;padding: 0!important;">
+            <div class="lesson-card-img" style="padding: 0!important;margin: 0!important;display: flex;" (click)="selectedMultimedia(temary.link)">
+                <iframe style="width: 100%;height: 100%" width="100" height="100" 
+                    [src]=temary.link></iframe>
+                <h1>{{temary.name}}</h1>
+            </div>
+        </div>
+    </section>
+</ion-content>

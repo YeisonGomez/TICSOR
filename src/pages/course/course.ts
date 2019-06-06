@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams, AlertController, ActionSheetController, Slides } from 'ionic-angular';
+import { DomSanitizer } from "@angular/platform-browser";
 
 import { TemaryService } from '../../services/temary.service';
 import { TestPage } from '../test/test';
@@ -16,14 +17,23 @@ export class CoursePage {
   public contentSelected;
   @ViewChild(Slides) slides: Slides;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, private temaryService: TemaryService) {
-    this.reproduce = "play";
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    public alertCtrl: AlertController, 
+    private domSanitizer: DomSanitizer,
+    private temaryService: TemaryService) {
 
+    this.reproduce = "play";
     this.temary = navParams.get("temary");
 
     temaryService.getContent(this.temary.id)
       .subscribe((data) => {
         this.content = data.result;
+        this.content.map(item => {
+          if(item.multimedia_tipo == 1) item.url = this.domSanitizer.bypassSecurityTrustResourceUrl(item.url);
+          return item;
+        });
         this.contentSelected = this.content[0];
       });
   }

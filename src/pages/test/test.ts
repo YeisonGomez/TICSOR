@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { DomSanitizer } from "@angular/platform-browser";
 
 import { LessonsPage } from '../../pages/lessons/lessons';
 import { TemaryService } from '../../services/temary.service';
@@ -21,7 +22,15 @@ export class TestPage {
 	title = "";
 	subtitle = "";
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, private temaryService: TemaryService, private tokenService: TokenService, private alertCtrl: AlertController, private evaluateService: EvaluateService) {
+	constructor(
+		public navCtrl: NavController, 
+		public navParams: NavParams, 
+		private temaryService: TemaryService, 
+		private tokenService: TokenService, 
+		private alertCtrl: AlertController, 
+		private evaluateService: EvaluateService,
+		private domSanitizer: DomSanitizer
+		) {
 		this.reproduce = "play";
 
 		if (navParams.get("type") == 1) {
@@ -142,13 +151,32 @@ export class TestPage {
 			let random = Math.floor(Math.random() * array.length);
 			if (array[random].images) {
 				array[random].images = JSON.parse(array[random].images);
+				
+				array[random].images = array[random].images.map(url => {
+					if(url.indexOf('youtube') != -1)
+						url = { type: 'video', source: this.domSanitizer.bypassSecurityTrustResourceUrl(url) }
+					else
+						url = { type: 'image', source: url }
+					
+					return url;
+				});
 			}
+			
 			array[random].respuesta = JSON.parse(array[random].respuesta);
+			array[random].respuesta = array[random].respuesta.map(response => {
+				if(response.contenido.indexOf('youtube') != -1)
+					response.contenido = { type: 'video', source: this.domSanitizer.bypassSecurityTrustResourceUrl(response.contenido) }
+				else
+					response.contenido = { type: 'image', source: response.contenido }
+				return response;
+			});
+
 			array[random].life = 3;
 			array[random].select = 0;
 			array_random.push(array[random]);
 			array.splice(random, 1);
 		}
+		
 		return array_random;
 	}
 

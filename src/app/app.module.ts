@@ -27,7 +27,7 @@ import { QrPage } from '../pages/qr/qr';
 import { PracticePage } from '../pages/practice/practice';
 import { TestPage } from '../pages/test/test';
 import { AboutusPage } from '../pages/aboutus/aboutus';
-
+import { TeleologicalPage } from '../pages/teleological/teleological';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -50,7 +50,8 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
     QrPage,
     PracticePage,
     TestPage,
-    AboutusPage
+    AboutusPage,
+    TeleologicalPage
   ],
   imports: [
     BrowserModule,
@@ -70,7 +71,8 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
     QrPage,
     PracticePage,
     TestPage,
-    AboutusPage
+    AboutusPage,
+    TeleologicalPage
   ],
   providers: [
     GooglePlus,

@@ -11,7 +11,7 @@ import { Network } from '@ionic-native/network';
 @Injectable()
 export class ApiService {
 
-  private api_base_url = 'http://dev.nativoadn.com:3312';
+  private api_base_url = 'http://138.197.105.67:3312';
 	private wifi: boolean = true;
 
   constructor(
