@@ -12,16 +12,10 @@
     </ion-navbar>
 </ion-header>
 <ion-content padding style="background: #E5E5E5;">
-    <div class="lesson-card play " *ngIf="defaultMultimedia">
-        <div class="lesson-card-img" >
-            <iframe 
-                [src]=defaultMultimedia frameborder="0" allow="accelerometer;encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-    </div>
-    <section class="grid-lessons" style="display: flex">
+    <section class="grid-lessons">
         <div class="lesson-card" *ngFor="let temary of temary" style="margin: 2px 4px!important;padding: 0!important;">
-            <div class="lesson-card-img" style="padding: 0!important;margin: 0!important;display: flex;" (click)="selectedMultimedia(temary.link)">
-                <iframe style="width: 100%;height: 100%" width="100" height="100" 
+            <div class="lesson-card-img">
+                <iframe style="width: 100%;height: 100%" width="100" height="100" allow="accelerometer;encrypted-media; gyroscope; picture-in-picture" allowfullscreen
                     [src]=temary.link></iframe>
                 <h1>{{temary.name}}</h1>
             </div>
