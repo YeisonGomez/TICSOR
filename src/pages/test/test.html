@@ -16,7 +16,7 @@
         <div class="test-card">
             <div class="test-header">
                 <br>
-                <ion-slides pager class="slider">
+                <ion-slides pager class="slider " style="margin-top: 20px">
                     <ion-slide class="slider-page" *ngFor="let i = index; let image of questions[questionIndex].images">
                         <img *ngIf="image.type == 'image'" src="{{image.source}}" alt="">
                         
