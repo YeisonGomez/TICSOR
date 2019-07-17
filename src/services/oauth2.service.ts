@@ -13,16 +13,22 @@ export class Oauth2Service {
   }
 
   getAccessToken(code: string) {
-    return this.http.post('http://chaira.udla.edu.co/api/v0.1/oauth2/authorize.asmx/token', JSON.stringify({
+    return this.http.post('https://chaira.udla.edu.co/ChairaApi/oauth2/token', {
       grant_type: "authorization_code", 
       code: code,
       redirect_uri: "http://localhost/callback",
-      client_id: "607027410088",
-      client_secret: "r3wd4q0x12gmevyn4lp729vpl7gejy",
+      client_id: "fsEv87eZrVTh5OqACrlN4fPLea3YVj",
+      client_secret: "I1YSIKlfKbztU7expF5BRIrc48xfhR",
       state: "OK"
-    }))
+    })
     .toPromise()
-    .then(response => response.json(), this.handleError);
+    .then(async token => {
+      const accessToken = (await token.json()).access_token
+      
+      return this.http.get(`https://chaira.udla.edu.co/ChairaApi/consultar?recurso=GjR9jrQ4mrF&access_token=${accessToken}`)
+      .toPromise()
+      .then(response => response.json(), this.handleError);
+    }, this.handleError);
   }
 
   handleError(error) {

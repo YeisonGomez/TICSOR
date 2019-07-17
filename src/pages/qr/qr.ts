@@ -3,6 +3,7 @@ import { NavController, NavParams, AlertController, ActionSheetController, Slide
 
 import { QrService } from '../../services/qr.service';
 import { TestPage } from '../test/test';
+import { DomSanitizer } from "@angular/platform-browser";
 
 @Component({
   selector: 'page-qr',
@@ -16,16 +17,23 @@ export class QrPage {
 
   @ViewChild(Slides) slides: Slides; 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, private qrService: QrService) {
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    public alertCtrl: AlertController, 
+    private domSanitizer: DomSanitizer,
+    private qrService: QrService) {
     this.reproduce = "play";
 
      this.theme = navParams.get("theme");
 
     qrService.getQr(this.theme)
       .subscribe((data) => {
-        console.log(data.result);
         this.content = data.result[0];
+        
         this.content.images = JSON.parse(this.content.images);
+        this.content.images = this.content.images.map(item => this.domSanitizer.bypassSecurityTrustResourceUrl(item))
+
       }); 
   }
 

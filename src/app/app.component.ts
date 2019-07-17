@@ -50,7 +50,7 @@ export class TICSOR {
       { title: 'Inicio', component: HomePage, icon: 'home' },
       { title: 'Temario', component: LessonsPage, icon: 'book' },
       { title: 'Práctica', component: PracticePage, icon: 'school' },
-      { title: 'Nosotros', component: AboutusPage, icon: 'contact' },
+      { title: 'Presentación', component: AboutusPage, icon: 'contact' },
       { title: 'Temario Teleológico', component: TeleologicalPage, icon: 'book' }
     ];
   }

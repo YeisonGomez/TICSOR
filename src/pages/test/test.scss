@@ -32,7 +32,7 @@ page-test {
             width: 7em;
             height: 7em;
         }
-        .selected {
+        &--selected {
             opacity: .5;
         }
     }

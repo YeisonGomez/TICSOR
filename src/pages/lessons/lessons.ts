@@ -3,6 +3,7 @@ import { NavController, Platform } from 'ionic-angular';
 import { ActionSheetController } from 'ionic-angular';
 import { TopicPage } from '../topic/topic';
 import { TestPage } from '../test/test';
+import { LoginPage } from '../login/login';
 
 import { TemaryService } from '../../services/temary.service';
 
@@ -29,13 +30,14 @@ export class LessonsPage {
 
   presentActionSheet() {
     let actionSheet = this.actionSheetCtrl.create({
-      title: 'TicSor',
+      title: 'UASOR',
       buttons: [
         {
           text: 'Cerrar Sesion',
           role: 'Close Sesion',
           handler: () => {
-            console.log('Destructive clicked');
+            localStorage.clear();
+            this.navCtrl.setRoot(LoginPage);
           }
         }
       ]

@@ -1,13 +1,13 @@
 <ion-header>
     <ion-navbar color="primary">
         <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-        <ion-title>TicSor</ion-title>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>UASOR</ion-title>
         <ion-buttons end (click)="showConfirm()">
             <button style="font-size: 1.8rem;" ion-button color="light" (click)="presentActionSheet()">
-        <ion-icon name="more"></ion-icon>
-      </button>
+                <ion-icon name="more"></ion-icon>
+            </button>
         </ion-buttons>
     </ion-navbar>
 </ion-header>
@@ -19,10 +19,10 @@
                 <ion-slides pager class="slider " style="margin-top: 20px">
                     <ion-slide class="slider-page" *ngFor="let i = index; let image of questions[questionIndex].images">
                         <img *ngIf="image.type == 'image'" src="{{image.source}}" alt="">
-                        
 
-                        <iframe *ngIf="image.type == 'video'" id="video-{{i}}" style="width: 100%;height: 100%" width="100" height="100" 
-                        [src]=image.source></iframe>
+
+                        <iframe *ngIf="image.type == 'video'" id="video-{{i}}" style="width: 100%;height: 100%"
+                            width="100" height="100" [src]=image.source></iframe>
                     </ion-slide>
                 </ion-slides>
                 <div class="test-lifes">
@@ -37,22 +37,30 @@
             <ion-list>
                 <ion-item *ngFor="let item of questions[questionIndex].respuesta">
                     <ion-label (click)="questions[questionIndex].select = item.id">{{item.contenido.source}}</ion-label>
-                    <ion-checkbox (click)="questions[questionIndex].select = item.id" color="dark" checked="{{questions[questionIndex].select == item.id}}"></ion-checkbox>
+                    <ion-checkbox (click)="questions[questionIndex].select = item.id" color="dark"
+                        checked="{{questions[questionIndex].select == item.id}}"></ion-checkbox>
                 </ion-item>
             </ion-list>
         </div>
-        <div class="test-question grid-imgs" padding *ngIf="questions[questionIndex].respuesta[0].imagen > 0">
-            <div class="answer" *ngFor="let item of questions[questionIndex].respuesta" (click)="questions[questionIndex].select = item.id" [ngClass]="{'selected': questions[questionIndex].select == item.id}">
-                <!--selected en answer-->
-                <img *ngIf="item.contenido.type == 'image'" src="{{item.contenido.source}}" alt="">
+        <section *ngIf="questions[questionIndex].respuesta[0].imagen > 0">
+            <div class="test-question grid-imgs" style="display: inline-block;width: calc(50% - 10px);margin: 5px;"
+                padding *ngFor="let item of questions[questionIndex].respuesta"
+                [ngClass]="{'test-question--selected': questions[questionIndex].select == item.id}">
+                <div class="answer">
+                    <!--selected en answer-->
+                    <img *ngIf="item.contenido.type == 'image'" src="{{item.contenido.source}}" alt="">
+                    <iframe *ngIf="item.contenido.type == 'video'" id="video-{{i}}" style="width: 100%;height: 100%"
+                        width="100" height="100" [src]=item.contenido.source></iframe>
 
-                <iframe *ngIf="item.contenido.type == 'video'" id="video-{{i}}" style="width: 100%;height: 100%" width="100" height="100" 
-                [src]=item.contenido.source></iframe>
-
+                </div>
+                <button
+                    style="padding: 10px;border-radius: 5px;background-color: #498057;color: #fff;display: block; margin: 0 auto;"
+                    block (click)="questions[questionIndex].select = item.id">Seleccionar</button>
             </div>
-        </div>
+        </section>
         <div>
-            <button ion-button block (click)="response()" [disabled]="questions[questionIndex].select == 0" class="vibrate-1">Calificar</button>
+            <button ion-button block (click)="response()" [disabled]="questions[questionIndex].select == 0"
+                class="vibrate-1">Calificar</button>
         </div>
     </div>
 </ion-content>

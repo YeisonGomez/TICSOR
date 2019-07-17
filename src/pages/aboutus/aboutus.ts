@@ -17,7 +17,7 @@ export class AboutusPage {
   }
   presentActionSheet() {
     let actionSheet = this.actionSheetCtrl.create({
-      title: 'TicSor',
+      title: 'UASOR',
       buttons: [
         {
           text: 'Cerrar Sesion',

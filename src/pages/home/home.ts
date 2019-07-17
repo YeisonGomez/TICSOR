@@ -80,7 +80,7 @@ export class HomePage {
 
   presentActionSheet() {
     let actionSheet = this.actionSheetCtrl.create({
-      title: 'TicSor',
+      title: 'UASOR',
       buttons: [
         {
           text: '⊗ Cerrar Sesion',

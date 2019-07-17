@@ -146,10 +146,13 @@ export class LoginPage {
         this.chairaLogin().then(success => {
           this.oauth2Service.getAccessToken(success.detail)
             .then(response => {
-              let scope = JSON.parse(response.scope)[0];
-              this.authService.login(scope.NOMBRES, scope.APELLIDOS, scope.CORREO, scope.FOTO)
+              console.log(response);
+              let scope = response.data[0];
+              let names = scope.NOMBRE.split(' ')[0];
+              let lastnames = scope.NOMBRE.replace(names, '')
+              this.authService.login(names, lastnames, scope.CORREO, scope.FOTO)
                 .subscribe(token => {
-                  this.user.save(scope);
+                  this.user.save({ ...scope, NOMBRES: names, APELLIDOS: lastnames });
                   this.tokenService.saveToken(token.token);
                   this.events.publish('user:exist', this.user.get());
                   this.dissmissLoading();
@@ -172,7 +175,9 @@ export class LoginPage {
   }
 
   public chairaLogin(): Promise<any> {
-    let api_url = "http://chaira.udla.edu.co/api/v0.1/oauth2/authorize.asmx/auth?response_type=code&client_id=607027410088&redirect_uri=http://localhost/callback&state=xyz";
+    const clientId = "fsEv87eZrVTh5OqACrlN4fPLea3YVj";
+    //let api_url = "http://chaira.udla.edu.co/api/v0.1/oauth2/authorize.asmx/auth?response_type=code&client_id=607027410088&redirect_uri=http://localhost/callback&state=xyz";
+    let api_url = `https://chaira.udla.edu.co/ChairaApi/oauth2/auth?response_type=code&client_id=${clientId}&redirect_uri=http://localhost/callback&state=xyz`;
     return new Promise((resolve, reject) => {
       let browserRef = this.appBrowser.create(api_url, "_blank", this.options);
       let closeSuccess = false;
@@ -180,14 +185,14 @@ export class LoginPage {
         if ((event.url).indexOf("http://localhost/callback") === 0) {
           closeSuccess = true;
           browserRef.close();
-          let responseParameters = ((event.url).split("?")[1]).split("&");
-
-          if (responseParameters[0].indexOf('error') == -1) {
-            resolve({ detail: responseParameters[0].substring(5, responseParameters[0].length), state: 'OK' });
-          } else if (responseParameters[0].substring(6, responseParameters[0].length) == 'access_denied') {
+          let responseParameters = ((event.url).split("?")[1]).split("&")[2].split("=")[1];
+        
+          if (responseParameters.indexOf('error') == -1) {
+            resolve({ detail: responseParameters, state: 'OK' });
+          } else if (responseParameters.substring(6, responseParameters.length) == 'access_denied') {
             reject({ detail: 'Esta aplicación no esta autorizada.', state: 'error_noti' });
           } else {
-            console.log(responseParameters[0].substring(6, responseParameters[0].length));
+            console.log(responseParameters.substring(6, responseParameters.length));
             reject({ detail: 'Lo sentimos ocurrió un problema, intentalo de nuevo.', state: 'error_noti' });
           }
         }
